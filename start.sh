@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Script para levantar el proyecto Suplatzigram (WSL / Linux / macOS)
+# Script para levantar el proyecto Supagram (WSL / Linux / macOS)
 set -e
 cd "$(dirname "$0")"
 
@@ -17,5 +17,5 @@ if [ ! -d node_modules ]; then
 fi
 
 # 3. Levantar el servidor de desarrollo
-echo "Levantando Suplatzigram en http://localhost:3000 ..."
+echo "Levantando Supagram en http://localhost:3000 ..."
 npm run dev

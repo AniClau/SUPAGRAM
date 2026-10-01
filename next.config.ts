@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Necesario si un antivirus/proxy intercepta HTTPS y next/font no puede bajar las fuentes de Google
+    turbopackUseSystemTlsCerts: true,
+  },
   images: {
     unoptimized: true,
     remotePatterns: [

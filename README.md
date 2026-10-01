@@ -1,4 +1,4 @@
-# Suplatzigram
+# Supagram
 
 Repositorio del frontend para el **Curso de Supabase de Platzi**. Una aplicación inspirada en Instagram construida con [Next.js](https://nextjs.org) y [Supabase](https://supabase.com) como backend.
 

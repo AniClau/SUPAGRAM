@@ -1,5 +1,5 @@
 @echo off
-REM Script para levantar el proyecto Suplatzigram en Windows
+REM Script para levantar el proyecto Supagram en Windows
 cd /d "%~dp0"
 
 if not exist .env.local (
@@ -13,5 +13,5 @@ if not exist node_modules (
   call npm install
 )
 
-echo Levantando Suplatzigram en http://localhost:3000 ...
+echo Levantando Supagram en http://localhost:3000 ...
 call npm run dev
