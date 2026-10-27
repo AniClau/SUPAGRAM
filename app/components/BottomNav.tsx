@@ -60,7 +60,7 @@ export default function BottomNav() {
 
         <Link
           href="/post"
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-primary to-accent text-white shadow-lg hover:scale-105 transition-transform"
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-linear-to-r from-primary to-accent text-white shadow-lg hover:scale-105 transition-transform"
         >
           <PlusIcon />
         </Link>

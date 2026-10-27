@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { supabase } from "../../utils/supabase";
+import { supabase } from "../../lib/client";
 
 interface Profile {
   id: string;
