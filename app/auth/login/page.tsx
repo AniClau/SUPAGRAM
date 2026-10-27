@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { supabase } from "../../utils/supabase";
+import { supabase } from "../../lib/client";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -23,15 +23,6 @@ export default function LoginPage() {
 
       if (error) throw error;
 
-      // Obtener datos del usuario logueado
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      const metadata = user?.user_metadata;
-
-      console.log("👤 Usuario logueado:", user);
-      console.log("📋 Metadata:", metadata);
-
       setMessage({ type: "success", text: "¡Inicio de sesión exitoso!" });
     } catch (error) {
       setMessage({
@@ -48,7 +39,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
             Supagram
           </h1>
           <p className="text-foreground/60 mt-2">Inicia sesión en tu cuenta</p>
@@ -90,7 +81,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 px-4 rounded-xl bg-linear-to-r from-primary to-accent text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "Iniciando sesión..." : "Iniciar sesión"}
           </button>

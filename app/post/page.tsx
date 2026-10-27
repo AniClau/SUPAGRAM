@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { supabase } from "../utils/supabase";
+import { supabase } from "../lib/client";
 import Link from "next/link";
 
 export default function CreatePage() {
