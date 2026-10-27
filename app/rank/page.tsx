@@ -2,38 +2,64 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { supabase } from "../utils/supabase";
-import HeartIcon from "../components/HeartIcon";
 import Modal from "../components/Modals";
+import HeartIcon from "../components/HeartIcon";
+import { supabase } from "../utils/supabase";
 import { Post } from "../tipe";
 
 
 export default function RankPage() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-  const [posts, setPosts] = useState<Post[]>([])
 
-    useEffect(() => {
-      async function getPosts() {
-        const { data: posts } = await
-        supabase.from('posts')
-        .select('*')
-        .gte('likes', 50)
-        .order('likes', { ascending: false })
+  const [posts, setPosts] = useState<Post[]>([]);
 
-        if (posts) {
-          setPosts(posts)
-        }
+  useEffect(() => {
+    const fetchPosts = async () => {
+      // 1. Obtener posts
+      const { data: postsData, error: postsError } = await supabase
+        .from("posts")
+        .select("id, image_url, caption, likes, user_id, created_at")
+        .gt("likes", 5)
+        .order("likes", { ascending: false });
+
+      if (postsError) {
+        console.error("Error al obtener los posts:", postsError);
+        return;
       }
 
-    getPosts()
-  }, [])
-  
+      // 2. Obtener IDs únicos de usuarios
+      const userIds = [...new Set(postsData.map((p) => p.user_id))];
+
+      // 3. Buscar profiles de esos usuarios
+      const { data: profilesData } = await supabase
+        .from("profiles")
+        .select("id, username, avatar_url")
+        .in("id", userIds);
+
+      // 4. Crear mapa de profiles por ID
+      const profilesMap = new Map(
+        profilesData?.map((p) => [p.id, { username: p.username, avatar_url: p.avatar_url }]) || []
+      );
+
+      // 5. Combinar posts con profiles
+      const postsWithProfiles: Post[] = postsData.map((post) => ({
+        ...post,
+        profile: profilesMap.get(post.user_id),
+        isLiked: false,
+      }));
+
+      setPosts(postsWithProfiles);
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-card-bg border-b border-border">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-center">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h1 className="text-xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
             Ranking
           </h1>
         </div>
